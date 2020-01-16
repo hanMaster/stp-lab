@@ -5,8 +5,15 @@ import BreadCrumb from "../components/breadCrumb";
 import Card from "../components/card";
 import executors from "./../data/data";
 import photo from "../images/image.jpg";
+import CheckBox from "../components/checkBox/checkBox";
 
-const Step3 = ({ step, nextStep, handleChange, values }) => {
+const Step3 = ({
+  step,
+  nextStep,
+  handleCheckBoxChange,
+  values,
+  handleExecutorIdChange
+}) => {
   const cardList = executors.map(ex => {
     return (
       <Card
@@ -16,7 +23,7 @@ const Step3 = ({ step, nextStep, handleChange, values }) => {
         rating={ex.rating}
         photo={photo}
         key={ex.id}
-        handleChange={handleChange}
+        handleExecutorIdChange={handleExecutorIdChange}
         selected={values.executorId === ex.id}
       />
     );
@@ -35,6 +42,21 @@ const Step3 = ({ step, nextStep, handleChange, values }) => {
           <h4>Последние пять</h4>
           {cardList}
         </div>
+      </div>
+      <span className="showAll">посмотреть всех</span>
+      <div className="insurance">
+        <CheckBox
+          checked={values.insuranceCheckBox}
+          onChange={handleCheckBoxChange("insuranceCheckBox")}
+          caption={"Застраховать заказ за 2000 рублей"}
+        />
+      </div>
+      <div className="rules">
+        <CheckBox
+          checked={values.rulesCheckBox}
+          onChange={handleCheckBoxChange("rulesCheckBox")}
+          caption={`Нажимая кнопку "Принять заказ", вы принимаете Правила использования сервиса`}
+        />
       </div>
 
       <div className="buttons">

@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./checkBox.scss";
-const CheckBox = ({ checked, onChange }) => {
+const CheckBox = ({ checked, onChange, caption }) => {
   const id = Math.random();
   return (
     <div className="checkbox">
@@ -12,9 +13,17 @@ const CheckBox = ({ checked, onChange }) => {
         checked={checked}
         onChange={onChange}
       />
-      <label className="checkbox-label" htmlFor={id} />
+      <label className="checkbox-label" htmlFor={id}>
+        {caption}
+      </label>
     </div>
   );
+};
+
+CheckBox.propTypes = {
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  caption: PropTypes.string
 };
 
 export default CheckBox;

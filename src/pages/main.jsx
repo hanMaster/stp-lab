@@ -10,7 +10,7 @@ class Main extends Component {
     insuranceCheckBox: true,
     rulesCheckBox: false,
     deliveryTypeRadio: 0,
-    addressText: "Санкт-Петербург, ул.Комисара Смирнова, д. 15, оф. 343",
+    addressText: "Санкт-Петербург, ул.Комиссара Смирнова, д. 15, оф. 343",
     orderCommentText: "",
     amountNumber: 10500,
     comissionNumber: 1500,
@@ -35,14 +35,25 @@ class Main extends Component {
     });
   };
 
-  handleChange = (input, value) => {
-    this.setState({ [input]: value });
+  handleExecutorIdChange = value => {
+    this.setState({ executorId: value });
+  };
+
+  handleCheckBoxChange = input => e => {
+    this.setState({ [input]: e.target.checked });
   };
 
   render() {
     const { step } = this.state;
-    const { executorId, insuranceCheckBox } = this.state;
-    const values = { executorId, insuranceCheckBox };
+    const {
+      executorId,
+      insuranceCheckBox,
+      rulesCheckBox,
+      deliveryTypeRadio,
+      addressText
+    } = this.state;
+    const values3 = { executorId, insuranceCheckBox, rulesCheckBox };
+    const values4 = { deliveryTypeRadio, addressText };
 
     switch (step) {
       case 3:
@@ -51,8 +62,9 @@ class Main extends Component {
             <Step3
               step={step}
               nextStep={this.nextStep}
-              values={values}
-              handleChange={this.handleChange}
+              values={values3}
+              handleCheckBoxChange={this.handleCheckBoxChange}
+              handleExecutorIdChange={this.handleExecutorIdChange}
             />
           </div>
         );
@@ -63,6 +75,7 @@ class Main extends Component {
               step={this.state.step}
               nextStep={this.nextStep}
               prevStep={this.prevStep}
+              values={values4}
             />
           </div>
         );

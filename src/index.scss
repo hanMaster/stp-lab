@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600&display=swap");
 @import "./variables";
 
 body {
@@ -63,6 +64,14 @@ h4 {
   line-height: 22px;
   margin: 27px 0 12px;
 }
+span.showAll {
+  display: block;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 300;
+  color: #979797;
+  cursor: pointer;
+}
 
 .executors {
   display: flex;
@@ -97,8 +106,51 @@ h4 {
   }
 }
 
+.insurance {
+  margin-top: 27px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.rules {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
 .buttons {
   display: flex;
   justify-content: center;
-  margin-top: 75px;
+  margin: 75px 0;
+}
+
+//step4
+
+.delivery {
+  margin: 40px 0;
+  &-radio {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.address {
+  margin: 40px 0;
+}
+
+.mapLink {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #1771e6;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.comment {
+  textarea {
+    width: 100%;
+    height: 135px;
+    border-radius: 5px;
+    padding: 10px;
+  }
 }

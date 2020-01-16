@@ -7,7 +7,7 @@ const Card = ({
   title,
   specialisation,
   rating,
-  handleChange,
+  handleExecutorIdChange,
   selected
 }) => {
   const onChange = val => {
@@ -16,7 +16,7 @@ const Card = ({
     } else {
       val = exId;
     }
-    handleChange("executorId", val);
+    handleExecutorIdChange(val);
   };
 
   return (
