@@ -1,0 +1,104 @@
+@import "./variables";
+
+body {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+//components
+//button
+
+.btn {
+  font-family: Montserrat, sans-serif;
+  width: 222px;
+  height: 55px;
+  font-size: 14px;
+  color: #000000;
+  text-transform: uppercase;
+
+  &-primary {
+    border: none;
+    background-color: $primary;
+  }
+
+  &-secondary {
+    border: 3px solid $primary;
+    background-color: #fff;
+    margin-right: 36px;
+  }
+
+  &-reject {
+    border: none;
+    background-color: $reject;
+  }
+}
+
+//main
+.wrapper {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+//step3
+
+h2 {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+  margin-bottom: 0;
+}
+
+h4 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  margin: 27px 0 12px;
+}
+
+.executors {
+  display: flex;
+}
+.recommendations {
+  margin-right: 5px;
+}
+
+.card {
+  max-width: 380px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid $reject;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  &-photo {
+    border-radius: 50%;
+  }
+  &-info {
+    margin: 15px;
+    font-weight: 600;
+    &-title {
+      font-size: 18px;
+      line-height: 22px;
+    }
+    &-details {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 75px;
+}
