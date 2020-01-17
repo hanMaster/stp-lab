@@ -53,7 +53,14 @@ class Main extends Component {
       addressText
     } = this.state;
     const values3 = { executorId, insuranceCheckBox, rulesCheckBox };
-    const values4 = { deliveryTypeRadio, addressText };
+    const values4 = {
+      deliveryTypeRadio,
+      addressText,
+      insuranceCheckBox,
+      rulesCheckBox
+    };
+
+    const valuesConfirm = { addressText };
 
     switch (step) {
       case 3:
@@ -75,12 +82,20 @@ class Main extends Component {
               step={this.state.step}
               nextStep={this.nextStep}
               prevStep={this.prevStep}
+              handleCheckBoxChange={this.handleCheckBoxChange}
               values={values4}
             />
           </div>
         );
       case 5:
-        return <Confirm />;
+        return (
+          <div className="wrapper">
+            <Confirm
+              handleCheckBoxChange={this.handleCheckBoxChange}
+              values={valuesConfirm}
+            />
+          </div>
+        );
       default:
         return "";
     }
