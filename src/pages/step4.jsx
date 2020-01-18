@@ -1,10 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { RadioGroup } from "@atlaskit/radio";
+import { OptionsPropType } from "@atlaskit/radio/types";
 import Button from "../components/button";
 import BreadCrumb from "../components/breadCrumb";
 import PropTypes from "prop-types";
 import CheckBox from "../components/checkBox/checkBox";
+import map from "./../images/map.png";
 
-const Step4 = ({ step, nextStep, prevStep, values, handleCheckBoxChange }) => {
+const options: OptionsPropType = [
+  {
+    name: "deliveryType",
+    value: "курьером",
+    label: "Курьером по городу 500р."
+  },
+  { name: "deliveryType", value: "тк", label: "Транспортной компанией" },
+  { name: "deliveryType", value: "нет", label: "Не нужна" }
+];
+const comissionOptions: OptionsPropType = [
+  {
+    name: "comissionPayer",
+    value: "seller",
+    label: "Продавец"
+  },
+  { name: "comissionPayer", value: "buyer", label: "Покаупатель" },
+  {
+    name: "comissionPayer",
+    value: "50/50",
+    label: "50% Продавец. 50% Покупатель"
+  }
+];
+
+const Step4 = ({
+  step,
+  nextStep,
+  prevStep,
+  values,
+  handleCheckBoxChange,
+  handleChange
+}) => {
+  const [mapVisibility, setMapVisibility] = useState(false);
+
+  const showMap = () => {
+    setMapVisibility(!mapVisibility);
+  };
+
   return (
     <>
       <BreadCrumb step={step} />
@@ -12,29 +51,32 @@ const Step4 = ({ step, nextStep, prevStep, values, handleCheckBoxChange }) => {
       <div className="delivery">
         <p>Выберите вид доставки</p>
         <div className="radio">
-          <div className="radio-group">
-            <input type="radio" id="123" />
-            <label htmlFor="123">Курьером по городу 500р.</label>
-          </div>
-          <div className="radio-group">
-            <input type="radio" id="1234" />
-            <label htmlFor="1234">Транспортной компанией</label>
-          </div>
-          <div className="radio-group">
-            <input type="radio" id="12345" />
-            <label htmlFor="12345">Не нужна</label>
-          </div>
+          <RadioGroup
+            options={options}
+            defaultValue={values.deliveryType}
+            onChange={handleChange("deliveryType")}
+          />
         </div>
       </div>
       <div className="address">
         <p>Адрес</p>
         <p>{values.addressText}</p>
-        <span className="mapLink">Показать на карте</span>
+        <span className="mapLink" onClick={showMap}>
+          {mapVisibility ? "Скрыть карту" : "Показать на карте"}
+        </span>
+        {mapVisibility && (
+          <div className="map">
+            <img src={map} alt="карта" />
+          </div>
+        )}
       </div>
 
       <div className="comment">
         <p>Комментарий к услуге</p>
-        <textarea></textarea>
+        <textarea
+          value={values.orderCommentText}
+          onChange={handleChange("orderCommentText")}
+        />
       </div>
 
       <div className="deal">
@@ -43,27 +85,28 @@ const Step4 = ({ step, nextStep, prevStep, values, handleCheckBoxChange }) => {
           <label htmlFor="amount_id" className="amount-label">
             Стоимость сделки *
           </label>
-          <input type="text" id="amount_id" className="amount-input" />
-          <p className="comission">В том числе комиссия: 1500р.</p>
+          <input
+            type="text"
+            id="amount_id"
+            className="amount-input"
+            value={`${values.amount} Р.`}
+            onChange={handleChange("amount")}
+          />
+          <p className="comission">
+            В том числе комиссия: {values.comission} Р.
+          </p>
           <p>Кто платит комиссию?</p>
           <div className="radio">
-            <div className="radio-group">
-              <input type="radio" id="223" />
-              <label htmlFor="223">Продавец</label>
-            </div>
-            <div className="radio-group">
-              <input type="radio" id="2234" />
-              <label htmlFor="2234">Покупатель</label>
-            </div>
-            <div className="radio-group">
-              <input type="radio" id="22345" />
-              <label htmlFor="22345">50% Продавец. 50% Покупатель</label>
-            </div>
+            <RadioGroup
+              options={comissionOptions}
+              defaultValue={values.comissionPayer}
+              onChange={handleChange("comissionPayer")}
+            />
           </div>
-          <p>Стоимость услуг Мастера: 500р.</p>
-          <p>Дополнительные условия сделки: 350р.</p>
-          <p>Доставка курьером по городу: 500р.</p>
-          <span className="amount-total">итого: 13550р.</span>
+          <p>Стоимость услуг Мастера: 500 Р.</p>
+          <p>Дополнительные условия сделки: 350 Р.</p>
+          <p>Доставка курьером по городу: 500 Р.</p>
+          <span className="amount-total">итого: 13550 Р.</span>
         </div>
       </div>
 

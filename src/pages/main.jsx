@@ -9,16 +9,18 @@ class Main extends Component {
     executorId: 3,
     insuranceCheckBox: true,
     rulesCheckBox: false,
-    deliveryTypeRadio: 0,
+    deliveryType: "курьером",
     addressText: "Санкт-Петербург, ул.Комиссара Смирнова, д. 15, оф. 343",
-    orderCommentText: "",
-    amountNumber: 10500,
-    comissionNumber: 1500,
-    comissionPayerRadio: 2,
-    amountExecutorNumber: 500,
-    amountExtraNumber: 350,
-    amountDeliveryNumber: 500,
-    amountTotalNumber: 13350
+    orderCommentText: "bla bla",
+    amount: 10500,
+    comission: 1500,
+    comissionPayer: "50/50",
+    amountExecutor: 500,
+    amountExtra: 350,
+    amountDelivery: 500,
+    amountTotal: 13350,
+    commentForRevisor: "Нужны фото салона",
+    openDisput: false
   };
 
   nextStep = () => {
@@ -43,24 +45,61 @@ class Main extends Component {
     this.setState({ [input]: e.target.checked });
   };
 
+  handleChange = input => e => {
+    if (input === "commentForRevisor") {
+      this.setState({ commentForRevisor: e });
+    } else if (input === "comissionPayer") {
+      if (e.target.value === "buyer") {
+        this.setState({ comission: 3000 });
+      } else if (e.target.value === "seller") {
+        this.setState({ comission: 0 });
+      } else {
+        this.setState({ comission: 1500 });
+      }
+    } else if (input === "openDisput") {
+      this.setState({ openDisput: !this.state.openDisput });
+    } else if (input === "amount") {
+      let val = e.target.value;
+      val = val.substring(0, val.length - 3);
+      this.setState({ amount: val });
+    } else {
+      this.setState({ [input]: e.target.value });
+    }
+  };
+
   render() {
     const { step } = this.state;
     const {
       executorId,
       insuranceCheckBox,
       rulesCheckBox,
-      deliveryTypeRadio,
-      addressText
+      deliveryType,
+      addressText,
+      orderCommentText,
+      comissionPayer,
+      amount,
+      comission,
+      commentForRevisor,
+      openDisput
     } = this.state;
     const values3 = { executorId, insuranceCheckBox, rulesCheckBox };
     const values4 = {
-      deliveryTypeRadio,
+      deliveryType,
       addressText,
       insuranceCheckBox,
-      rulesCheckBox
+      rulesCheckBox,
+      orderCommentText,
+      comissionPayer,
+      amount,
+      comission
     };
 
-    const valuesConfirm = { addressText };
+    const valuesConfirm = {
+      executorId,
+      addressText,
+      commentForRevisor,
+      openDisput
+    };
 
     switch (step) {
       case 3:
@@ -83,6 +122,7 @@ class Main extends Component {
               nextStep={this.nextStep}
               prevStep={this.prevStep}
               handleCheckBoxChange={this.handleCheckBoxChange}
+              handleChange={this.handleChange}
               values={values4}
             />
           </div>
@@ -93,6 +133,7 @@ class Main extends Component {
             <Confirm
               handleCheckBoxChange={this.handleCheckBoxChange}
               values={valuesConfirm}
+              handleChange={this.handleChange}
             />
           </div>
         );

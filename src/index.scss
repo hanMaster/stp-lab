@@ -25,6 +25,7 @@ code {
   font-size: 14px;
   color: #000000;
   text-transform: uppercase;
+  cursor: pointer;
 
   &-primary {
     border: none;
@@ -40,6 +41,7 @@ code {
   &-reject {
     border: none;
     background-color: $reject;
+    margin-right: 36px;
   }
 }
 
@@ -88,7 +90,13 @@ span.showAll {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 5px;
+  &-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
   &-photo {
     border-radius: 50%;
   }
@@ -195,6 +203,10 @@ span.showAll {
   }
 }
 
+.map img {
+  width: 100%;
+}
+
 .confirm {
   &-header {
     font-style: normal;
@@ -287,9 +299,6 @@ span.showAll {
           color: #979797;
         }
       }
-      .map img {
-        width: 100%;
-      }
     }
     .confirm-btn {
       display: flex;
@@ -325,5 +334,32 @@ span.showAll {
         border-radius: 13.9792px;
       }
     }
+  }
+}
+
+.disput {
+  max-width: 568px;
+  margin: 0 auto;
+  &-select {
+    width: 100%;
+    font-family: Montserrat, sans-serif;
+    font-size: 22px;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #e3e6e9;
+    box-sizing: border-box;
+  }
+  &-comment {
+    margin-top: 20px;
+    padding: 10px 16px;
+    width: 100%;
+    height: 100px;
+    border-radius: 4px;
+    background: #ecf1f7;
+    box-sizing: border-box;
+  }
+  &-submit {
+    text-align: right;
+    margin-top: 20px;
   }
 }

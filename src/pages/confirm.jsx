@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import TextArea from "@atlaskit/textarea";
+import InlineEdit from "@atlaskit/inline-edit";
+import styled from "styled-components";
+import { gridSize, fontSize } from "@atlaskit/theme";
 import counter from "./../images/timer.png";
 import call from "./../images/ic-call.png";
 import calendar from "./../images/ic-calendar.png";
@@ -6,10 +10,27 @@ import time from "./../images/ic-time.png";
 import map from "./../images/map.png";
 import CheckBox from "../components/checkBox/checkBox";
 import Button from "../components/button";
+import executors from "./../data/data";
+import Disput from "./disput";
 
-const Confirm = ({ handleCheckBoxChange, values }) => {
+const minRows = 2;
+const textAreaLineHeightFactor = 2.5;
+const ReadViewContainer = styled.div`
+  line-height: ${(gridSize() * textAreaLineHeightFactor) / fontSize()};
+  min-height: ${gridSize() * textAreaLineHeightFactor * minRows}px;
+  padding: ${gridSize() - 2}px ${gridSize() - 2}px;
+  word-break: break-word;
+`;
+
+const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
   const confirm = () => {
     console.log("Confirm pressed");
+  };
+
+  const [mapVisibility, setMapVisibility] = useState(false);
+
+  const showMap = () => {
+    setMapVisibility(!mapVisibility);
   };
 
   return (
@@ -18,7 +39,10 @@ const Confirm = ({ handleCheckBoxChange, values }) => {
       <div className="confirm-section1">
         <div className="confirm-revisor">
           <div className="confirm-revisor-title">
-            <p>Константин Константинов, тел +79113745248</p>
+            <p>
+              {executors[values.executorId - 1].title}, тел{" "}
+              {executors[values.executorId - 1].phone}
+            </p>
             <span>
               <img src={call} alt="call" />
             </span>
@@ -71,15 +95,19 @@ const Confirm = ({ handleCheckBoxChange, values }) => {
               “Максимум”)
             </span>
           </p>
-          <span className="mapLink">Скрыть карту</span>
-          <div className="map">
-            <img src={map} alt="карта" />
-          </div>
+
+          <span className="mapLink" onClick={showMap}>
+            {mapVisibility ? "Скрыть карту" : "Показать на карте"}
+          </span>
+          {mapVisibility && (
+            <div className="map">
+              <img src={map} alt="карта" />
+            </div>
+          )}
         </div>
         <div className="confirm-btn">
           <Button onClick={confirm} title="Подтвердить" type="primary" />
         </div>
-
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
@@ -90,9 +118,7 @@ const Confirm = ({ handleCheckBoxChange, values }) => {
             3:15<span className="fixseconds">:45</span>
           </span>
         </div>
-
         <h3 className="checking">Проверка</h3>
-
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
@@ -120,6 +146,108 @@ const Confirm = ({ handleCheckBoxChange, values }) => {
             <div className="photos-loader"></div>
           </div>
         </div>
+        <div
+          style={{
+            padding: `${gridSize()}px ${gridSize()}px ${gridSize() * 6}px`,
+            width: "100%"
+          }}
+        >
+          <InlineEdit
+            defaultValue={values.commentForRevisor}
+            label="Комментарий для ревизора"
+            editView={(fieldProps, ref) => (
+              <TextArea {...fieldProps} ref={ref} />
+            )}
+            readView={() => (
+              <ReadViewContainer>
+                {values.commentForRevisor || "Нажмите для ввода"}
+              </ReadViewContainer>
+            )}
+            onConfirm={handleChange("commentForRevisor")}
+            keepEditViewOpenOnBlur
+            readViewFitContainerWidth
+          />
+        </div>
+        <div
+          className="buttons"
+          style={{ justifyContent: "flex-end", marginTop: "15px" }}
+        >
+          <Button title="Отклонить" type="reject" />
+          <Button title="Подтвердить" type="primary" />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={false}
+            caption={"Проверка лакокрасочного покрытия"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={true}
+            caption={"Проверка кузова на участие в ДТП"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={true}
+            caption={"Проверка силовых частей кузова"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={true}
+            caption={"Компьютерная диагностика"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={true}
+            caption={"Проверка остекления и оптики"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <CheckBox
+            checked={true}
+            caption={"Видеозвонок"}
+            onChange={handleCheckBoxChange("CheckBox")}
+          />
+        </div>
+        <div className="confirm-section3-step">
+          <h4>Принять работу?</h4>
+        </div>
+        <div
+          className="buttons"
+          style={{
+            justifyContent: "flex-start",
+            margin: "40px 0 20px -20px"
+          }}
+        >
+          <span
+            style={{
+              marginRight: "36px"
+            }}
+          >
+            <Button title="Заказ выполнен" type="primary" />
+          </span>
+
+          <Button
+            title="Открыть спор"
+            type="primary"
+            onClick={handleChange("openDisput")}
+          />
+        </div>
+
+        <p style={{ marginLeft: "-20px" }}>
+          Внимание! Заказ будет считаться завершенным через 3 дня, при
+          отсутствии активности со стороны заказчика.
+        </p>
+
+        {values.openDisput && <Disput />}
       </div>
     </>
   );
