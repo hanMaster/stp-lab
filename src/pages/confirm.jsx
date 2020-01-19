@@ -10,7 +10,7 @@ import time from "./../images/ic-time.png";
 import map from "./../images/map.png";
 import CheckBox from "../components/checkBox/checkBox";
 import Button from "../components/button";
-import executors from "./../data/data";
+import { executors, best } from "./../data/data";
 import Disput from "./disput";
 // import PhotoLoader from "../components/photoLoader/PhotoLoader";
 
@@ -27,6 +27,9 @@ const Confirm = ({ values, handleChange }) => {
   const confirm = () => {
     console.log("Confirm pressed");
   };
+
+  let exec = [...executors, ...best];
+  exec = exec.filter(ex => ex.id === values.executorId);
 
   const [mapVisibility, setMapVisibility] = useState(false);
 
@@ -61,8 +64,7 @@ const Confirm = ({ values, handleChange }) => {
         <div className="confirm-revisor">
           <div className="confirm-revisor-title">
             <p>
-              {executors[values.executorId - 1].title}, тел{" "}
-              {executors[values.executorId - 1].phone}
+              {exec[0].title}, тел {exec[0].phone}
             </p>
             <span>
               <img src={call} alt="call" />

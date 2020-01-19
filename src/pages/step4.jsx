@@ -7,6 +7,8 @@ import BreadCrumb from "../components/breadCrumb";
 import PropTypes from "prop-types";
 import CheckBox from "../components/checkBox/checkBox";
 import map from "./../images/map.png";
+import downArrow from "./../images/down.svg";
+import upArrow from "./../images/up.svg";
 
 const options: OptionsPropType = [
   {
@@ -31,7 +33,14 @@ const comissionOptions: OptionsPropType = [
   }
 ];
 
-const Step4 = ({ step, nextStep, prevStep, values, handleChange }) => {
+const Step4 = ({
+  step,
+  nextStep,
+  prevStep,
+  values,
+  handleChange,
+  changeAmount
+}) => {
   const [mapVisibility, setMapVisibility] = useState(false);
 
   const showMap = () => {
@@ -78,14 +87,32 @@ const Step4 = ({ step, nextStep, prevStep, values, handleChange }) => {
         <h2>Ваша сделка</h2>
         <div className="amount">
           <label className="amount-label">Стоимость сделки *</label>
-          <input
-            type="number"
-            step="50"
-            id="amount_id"
-            className="amount-input"
-            value={values.amount}
-            onChange={handleChange("amount")}
-          />
+          <div className="number-input">
+            <input
+              type="number"
+              step="50"
+              id="amount_id"
+              className="amount-input"
+              value={values.amount}
+              onChange={handleChange("amount")}
+            />
+            <div className="arrows">
+              <span
+                className="arrow arrow-up"
+                onClick={() => changeAmount("up")}
+              >
+                <img src={upArrow} alt="up" />
+              </span>
+              <span className="arrow arrow-middle"></span>
+              <span
+                className="arrow arrow-down"
+                onClick={() => changeAmount("down")}
+              >
+                <img src={downArrow} alt="down" />
+              </span>
+            </div>
+          </div>
+
           <p className="comission">
             В том числе комиссия: {values.comission} Р.
           </p>
@@ -130,7 +157,12 @@ const Step4 = ({ step, nextStep, prevStep, values, handleChange }) => {
 
       <div className="buttons">
         <Button onClick={prevStep} title="Вернуться" type="secondary" />
-        <Button onClick={nextStep} title="Продолжить" type="primary" />
+        <Button
+          onClick={nextStep}
+          title="Продолжить"
+          type="primary"
+          disabled={!values.rulesCheckBox}
+        />
       </div>
     </>
   );

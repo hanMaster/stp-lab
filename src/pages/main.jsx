@@ -89,13 +89,12 @@ class Main extends Component {
     }
   };
 
-  calcTotal = () => {
-    const amountTotal =
-      this.state.amount +
-      this.state.comission +
-      850 +
-      this.state.amountDelivery;
-    this.setState({ amountTotal });
+  changeAmount = type => {
+    if (type === "up") {
+      this.setState({ amount: this.state.amount + 50 });
+    } else {
+      this.setState({ amount: this.state.amount - 50 });
+    }
   };
 
   render() {
@@ -158,6 +157,7 @@ class Main extends Component {
               prevStep={this.prevStep}
               handleChange={this.handleChange}
               values={values4}
+              changeAmount={this.changeAmount}
             />
           </div>
         );

@@ -27,10 +27,13 @@ code {
   text-transform: uppercase;
   cursor: pointer;
   transition: 1s;
+  &:disabled {
+    background-color: #ccc;
+  }
   &-primary {
     border: none;
     background-color: $primary;
-    &:hover {
+    &:hover:enabled {
       background-color: darken($primary, 10%);
     }
   }
@@ -214,6 +217,13 @@ span.showAll {
     width: 350px;
     box-sizing: border-box;
   }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
   &-total {
     font-style: normal;
     font-weight: normal;
@@ -221,6 +231,42 @@ span.showAll {
     line-height: 29px;
     text-transform: capitalize;
     color: #333333;
+  }
+  .number-input {
+    display: inline-block;
+    position: relative;
+
+    .arrows {
+      position: absolute;
+      right: 20px;
+      top: 0;
+      width: 20px;
+      height: 48px;
+      // border: 1px solid crimson;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .arrow {
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      &-up {
+        cursor: pointer;
+      }
+      &-middle {
+        width: 15px;
+        height: 0px;
+        border: 1px solid #ccc;
+      }
+      &-down {
+        cursor: pointer;
+      }
+    }
   }
 }
 

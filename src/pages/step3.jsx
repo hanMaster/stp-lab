@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Button from "../components/button";
 import BreadCrumb from "../components/breadCrumb";
 import Card from "../components/card";
-import executors from "./../data/data";
+import { executors, best } from "./../data/data";
 import photo from "../images/image.jpg";
 import CheckBox from "../components/checkBox/checkBox";
 
@@ -15,7 +15,21 @@ const Step3 = ({
   values,
   handleExecutorIdChange
 }) => {
-  const cardList = executors.map(ex => {
+  const bestList = best.map(ex => {
+    return (
+      <Card
+        title={ex.title}
+        exId={ex.id}
+        specialisation={ex.specialization}
+        rating={ex.rating}
+        photo={photo}
+        key={ex.id}
+        handleExecutorIdChange={handleExecutorIdChange}
+        selected={values.executorId === ex.id}
+      />
+    );
+  });
+  const lastList = executors.map(ex => {
     return (
       <Card
         title={ex.title}
@@ -37,11 +51,11 @@ const Step3 = ({
       <div className="executors">
         <div className="recommendations">
           <h4>Наши рекомендации</h4>
-          {cardList}
+          {bestList}
         </div>
         <div className="last-five">
           <h4>Последние пять</h4>
-          {cardList}
+          {lastList}
         </div>
       </div>
       <span className="showAll">посмотреть всех</span>
@@ -62,7 +76,12 @@ const Step3 = ({
 
       <div className="buttons">
         <Button title="Вернуться" type="secondary" />
-        <Button onClick={nextStep} title="Продолжить" type="primary" />
+        <Button
+          onClick={nextStep}
+          title="Продолжить"
+          type="primary"
+          disabled={!values.rulesCheckBox}
+        />
       </div>
     </>
   );
