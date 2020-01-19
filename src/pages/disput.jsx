@@ -2,6 +2,12 @@ import React from "react";
 import Button from "../components/button";
 
 const Disput = () => {
+  const [result, setResult] = React.useState(false);
+
+  const onClick = () => {
+    setResult(!result);
+  };
+
   return (
     <div className="disput">
       <h2 className="confirm-header">Укажите причину открытия спора</h2>
@@ -20,13 +26,18 @@ const Disput = () => {
       </select>
       <textarea className="disput-comment" placeholder="Введите текст" />
       <div className="disput-submit">
-        <Button title="Открыть спор" type="primary" />
+        <Button title="Открыть спор" type="primary" onClick={onClick} />
       </div>
-      <h2 className="confirm-header">Решение</h2>
-      <p>
-        В течении 3х дней мы изучим вопрос и результаты вы получите по окончанию
-        спора.
-      </p>
+
+      {result && (
+        <div className="result">
+          <h2 className="confirm-header">Решение</h2>
+          <p>
+            В течении 3х дней мы изучим вопрос и результаты вы получите по
+            окончанию спора.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

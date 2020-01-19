@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600|Roboto:300,400,700&display=swap");
 @import "./variables";
 
 body {
@@ -26,22 +26,33 @@ code {
   color: #000000;
   text-transform: uppercase;
   cursor: pointer;
-
+  transition: 1s;
   &-primary {
     border: none;
     background-color: $primary;
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
   }
 
   &-secondary {
     border: 3px solid $primary;
     background-color: #fff;
     margin-right: 36px;
+
+    &:hover {
+      border-color: darken($primary, 10%);
+      background-color: darken($primary, 10%);
+    }
   }
 
   &-reject {
     border: none;
     background-color: $reject;
     margin-right: 36px;
+    &:hover {
+      background-color: darken($reject, 10%);
+    }
   }
 }
 
@@ -339,9 +350,17 @@ span.showAll {
       &-loader {
         width: 100px;
         height: 100px;
-
+        cursor: pointer;
         background: #ecf1f7;
         border-radius: 13.9792px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+      }
+
+      &-file {
+        display: none;
       }
     }
   }
@@ -367,6 +386,12 @@ span.showAll {
     border-radius: 4px;
     background: #ecf1f7;
     box-sizing: border-box;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    color: #333333;
   }
   &-submit {
     text-align: right;

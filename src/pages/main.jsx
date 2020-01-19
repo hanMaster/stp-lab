@@ -5,7 +5,7 @@ import Confirm from "./confirm";
 
 class Main extends Component {
   state = {
-    step: 3,
+    step: 5,
     executorId: 3,
     insuranceCheckBox: true,
     rulesCheckBox: false,
@@ -164,11 +164,7 @@ class Main extends Component {
       case 5:
         return (
           <div className="wrapper">
-            <Confirm
-              handleCheckBoxChange={this.handleCheckBoxChange}
-              values={valuesConfirm}
-              handleChange={this.handleChange}
-            />
+            <Confirm values={valuesConfirm} handleChange={this.handleChange} />
           </div>
         );
       default:

@@ -12,6 +12,7 @@ import CheckBox from "../components/checkBox/checkBox";
 import Button from "../components/button";
 import executors from "./../data/data";
 import Disput from "./disput";
+// import PhotoLoader from "../components/photoLoader/PhotoLoader";
 
 const minRows = 2;
 const textAreaLineHeightFactor = 2.5;
@@ -22,7 +23,7 @@ const ReadViewContainer = styled.div`
   word-break: break-word;
 `;
 
-const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
+const Confirm = ({ values, handleChange }) => {
   const confirm = () => {
     console.log("Confirm pressed");
   };
@@ -31,6 +32,26 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
 
   const showMap = () => {
     setMapVisibility(!mapVisibility);
+  };
+
+  const [loadedFiles, setFiles] = useState([]);
+  const [currentFile, setFile] = useState({ id: null, file: null });
+
+  let inputElement;
+
+  const onFileChange = e => {
+    if (e.target.files[0]) {
+      let name = e.target.files[0].name;
+      name = name.split(".");
+      name = "." + name[1];
+      setFile({ ...currentFile, file: name });
+      setFiles([...loadedFiles, { ...currentFile, file: name }]);
+    }
+  };
+
+  const handleClick = position => e => {
+    setFile({ id: position });
+    inputElement.click();
   };
 
   return (
@@ -72,14 +93,14 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
           <CheckBox
             checked={true}
             caption={"Принял заказ"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={false}
             caption={"Выехал на адрес"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
           <span className="fixtime">
             1:30<span className="fixseconds">:30</span>
@@ -112,7 +133,7 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
           <CheckBox
             checked={true}
             caption={"Прибыл на место"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
           <span className="fixtime">
             3:15<span className="fixseconds">:45</span>
@@ -123,7 +144,8 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
           <CheckBox
             checked={true}
             caption={"Сделать 10 фото автомобиля"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
+            color={loadedFiles.length >= 3 ? "#333333" : "red"}
           />
           <span className="fixtime">
             3:25<span className="fixseconds">:15</span>
@@ -132,18 +154,46 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
         <h5 className="descr">Описание</h5>
         <div className="photos">
           <div className="photos-line">
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
+            <input
+              type="file"
+              className="photos-file"
+              accept="video/*, image/*"
+              ref={input => (inputElement = input)}
+              onChange={onFileChange}
+            />
+
+            <div className="photos-loader" onClick={handleClick(1)}>
+              {loadedFiles[0] && loadedFiles[0].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(2)}>
+              {loadedFiles[1] && loadedFiles[1].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(3)}>
+              {loadedFiles[2] && loadedFiles[2].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(4)}>
+              {loadedFiles[3] && loadedFiles[3].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(5)}>
+              {loadedFiles[4] && loadedFiles[4].file}
+            </div>
           </div>
           <div className="photos-line">
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
-            <div className="photos-loader"></div>
+            <div className="photos-loader" onClick={handleClick(6)}>
+              {loadedFiles[5] && loadedFiles[5].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(7)}>
+              {loadedFiles[6] && loadedFiles[6].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(8)}>
+              {loadedFiles[7] && loadedFiles[7].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(9)}>
+              {loadedFiles[8] && loadedFiles[8].file}
+            </div>
+            <div className="photos-loader" onClick={handleClick(10)}>
+              {loadedFiles[9] && loadedFiles[9].file}
+            </div>
           </div>
         </div>
         <div
@@ -179,42 +229,42 @@ const Confirm = ({ handleCheckBoxChange, values, handleChange }) => {
           <CheckBox
             checked={false}
             caption={"Проверка лакокрасочного покрытия"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
             caption={"Проверка кузова на участие в ДТП"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
             caption={"Проверка силовых частей кузова"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
             caption={"Компьютерная диагностика"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
             caption={"Проверка остекления и оптики"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
           <CheckBox
             checked={true}
             caption={"Видеозвонок"}
-            onChange={handleCheckBoxChange("CheckBox")}
+            onChange={handleChange("CheckBox")}
           />
         </div>
         <div className="confirm-section3-step">
