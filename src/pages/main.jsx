@@ -5,7 +5,7 @@ import Confirm from "./confirm";
 
 class Main extends Component {
   state = {
-    step: 5,
+    step: 3,
     executorId: 3,
     insuranceCheckBox: true,
     rulesCheckBox: false,
