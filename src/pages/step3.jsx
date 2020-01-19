@@ -11,7 +11,7 @@ import CheckBox from "../components/checkBox/checkBox";
 const Step3 = ({
   step,
   nextStep,
-  handleCheckBoxChange,
+  handleChange,
   values,
   handleExecutorIdChange
 }) => {
@@ -48,14 +48,14 @@ const Step3 = ({
       <div className="insurance">
         <CheckBox
           checked={values.insuranceCheckBox}
-          onChange={handleCheckBoxChange("insuranceCheckBox")}
+          onChange={handleChange("insuranceCheckBox")}
           caption={"Застраховать заказ за 2000 рублей"}
         />
       </div>
       <div className="rules">
         <CheckBox
           checked={values.rulesCheckBox}
-          onChange={handleCheckBoxChange("rulesCheckBox")}
+          onChange={handleChange("rulesCheckBox")}
           caption={`Нажимая кнопку "Принять заказ", вы принимаете Правила использования сервиса`}
         />
       </div>

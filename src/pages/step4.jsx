@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RadioGroup } from "@atlaskit/radio";
 import { OptionsPropType } from "@atlaskit/radio/types";
+// import Textfield from "@atlaskit/textfield";
 import Button from "../components/button";
 import BreadCrumb from "../components/breadCrumb";
 import PropTypes from "prop-types";
@@ -10,7 +11,7 @@ import map from "./../images/map.png";
 const options: OptionsPropType = [
   {
     name: "deliveryType",
-    value: "курьером",
+    value: "курьер",
     label: "Курьером по городу 500р."
   },
   { name: "deliveryType", value: "тк", label: "Транспортной компанией" },
@@ -30,14 +31,7 @@ const comissionOptions: OptionsPropType = [
   }
 ];
 
-const Step4 = ({
-  step,
-  nextStep,
-  prevStep,
-  values,
-  handleCheckBoxChange,
-  handleChange
-}) => {
+const Step4 = ({ step, nextStep, prevStep, values, handleChange }) => {
   const [mapVisibility, setMapVisibility] = useState(false);
 
   const showMap = () => {
@@ -74,6 +68,7 @@ const Step4 = ({
       <div className="comment">
         <p>Комментарий к услуге</p>
         <textarea
+          className="comment-area"
           value={values.orderCommentText}
           onChange={handleChange("orderCommentText")}
         />
@@ -82,14 +77,13 @@ const Step4 = ({
       <div className="deal">
         <h2>Ваша сделка</h2>
         <div className="amount">
-          <label htmlFor="amount_id" className="amount-label">
-            Стоимость сделки *
-          </label>
+          <label className="amount-label">Стоимость сделки *</label>
           <input
-            type="text"
+            type="number"
+            step="50"
             id="amount_id"
             className="amount-input"
-            value={`${values.amount} Р.`}
+            value={values.amount}
             onChange={handleChange("amount")}
           />
           <p className="comission">
@@ -105,22 +99,31 @@ const Step4 = ({
           </div>
           <p>Стоимость услуг Мастера: 500 Р.</p>
           <p>Дополнительные условия сделки: 350 Р.</p>
-          <p>Доставка курьером по городу: 500 Р.</p>
-          <span className="amount-total">итого: 13550 Р.</span>
+
+          <p>
+            Доставка&nbsp;
+            {values.deliveryType === "курьер"
+              ? "курьером по городу: 500 Р."
+              : values.deliveryType === "тк"
+              ? "транспортной компанией: 0 Р."
+              : "не нужна: 0 Р."}
+          </p>
+
+          <span className="amount-total">итого: {values.amountTotal} Р.</span>
         </div>
       </div>
 
       <div className="insurance">
         <CheckBox
           checked={values.insuranceCheckBox}
-          onChange={handleCheckBoxChange("insuranceCheckBox")}
+          onChange={handleChange("insuranceCheckBox")}
           caption={"Застраховать заказ за 2000 рублей"}
         />
       </div>
       <div className="rules">
         <CheckBox
           checked={values.rulesCheckBox}
-          onChange={handleCheckBoxChange("rulesCheckBox")}
+          onChange={handleChange("rulesCheckBox")}
           caption={`Нажимая кнопку "Принять заказ", вы принимаете Правила использования сервиса`}
         />
       </div>

@@ -9,7 +9,7 @@ class Main extends Component {
     executorId: 3,
     insuranceCheckBox: true,
     rulesCheckBox: false,
-    deliveryType: "курьером",
+    deliveryType: "курьер",
     addressText: "Санкт-Петербург, ул.Комиссара Смирнова, д. 15, оф. 343",
     orderCommentText: "bla bla",
     amount: 10500,
@@ -41,30 +41,61 @@ class Main extends Component {
     this.setState({ executorId: value });
   };
 
-  handleCheckBoxChange = input => e => {
-    this.setState({ [input]: e.target.checked });
-  };
-
   handleChange = input => e => {
-    if (input === "commentForRevisor") {
+    if (input === "insuranceCheckBox" || input === "rulesCheckBox") {
+      this.setState({ [input]: e.target.checked });
+    } else if (input === "commentForRevisor") {
       this.setState({ commentForRevisor: e });
+    } else if (input === "deliveryType") {
+      let val = 0;
+      if (e.target.value === "курьер") {
+        val = 500;
+      }
+      this.setState({
+        deliveryType: e.target.value,
+        amountDelivery: val,
+        amountTotal: this.state.amount + this.state.comission + 850 + val
+      });
     } else if (input === "comissionPayer") {
       if (e.target.value === "buyer") {
-        this.setState({ comission: 3000 });
+        this.setState({
+          comission: 3000,
+          amountTotal:
+            this.state.amount + 3000 + 850 + this.state.amountDelivery
+        });
       } else if (e.target.value === "seller") {
-        this.setState({ comission: 0 });
+        this.setState({
+          comission: 0,
+          amountTotal: this.state.amount + 850 + this.state.amountDelivery
+        });
       } else {
-        this.setState({ comission: 1500 });
+        this.setState({
+          comission: 1500,
+          amountTotal:
+            this.state.amount + 1500 + 850 + this.state.amountDelivery
+        });
       }
     } else if (input === "openDisput") {
       this.setState({ openDisput: !this.state.openDisput });
     } else if (input === "amount") {
       let val = e.target.value;
-      val = val.substring(0, val.length - 3);
-      this.setState({ amount: val });
+      this.setState({
+        amount: +val,
+        amountTotal:
+          +val + this.state.comission + 850 + this.state.amountDelivery
+      });
     } else {
       this.setState({ [input]: e.target.value });
     }
+  };
+
+  calcTotal = () => {
+    const amountTotal =
+      this.state.amount +
+      this.state.comission +
+      850 +
+      this.state.amountDelivery;
+    this.setState({ amountTotal });
   };
 
   render() {
@@ -73,17 +104,20 @@ class Main extends Component {
       executorId,
       insuranceCheckBox,
       rulesCheckBox,
+      amountDelivery,
       deliveryType,
       addressText,
       orderCommentText,
       comissionPayer,
       amount,
       comission,
+      amountTotal,
       commentForRevisor,
       openDisput
     } = this.state;
     const values3 = { executorId, insuranceCheckBox, rulesCheckBox };
     const values4 = {
+      amountDelivery,
       deliveryType,
       addressText,
       insuranceCheckBox,
@@ -91,7 +125,8 @@ class Main extends Component {
       orderCommentText,
       comissionPayer,
       amount,
-      comission
+      comission,
+      amountTotal
     };
 
     const valuesConfirm = {
@@ -109,7 +144,7 @@ class Main extends Component {
               step={step}
               nextStep={this.nextStep}
               values={values3}
-              handleCheckBoxChange={this.handleCheckBoxChange}
+              handleChange={this.handleChange}
               handleExecutorIdChange={this.handleExecutorIdChange}
             />
           </div>
@@ -121,7 +156,6 @@ class Main extends Component {
               step={this.state.step}
               nextStep={this.nextStep}
               prevStep={this.prevStep}
-              handleCheckBoxChange={this.handleCheckBoxChange}
               handleChange={this.handleChange}
               values={values4}
             />
