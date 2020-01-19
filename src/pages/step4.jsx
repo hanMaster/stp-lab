@@ -86,7 +86,7 @@ const Step4 = ({
       <div className="deal">
         <h2>Ваша сделка</h2>
         <div className="amount">
-          <label className="amount-label">Стоимость сделки *</label>
+          <label className="amount-label">Стоимость сделки, руб. *</label>
           <div className="number-input">
             <input
               type="number"
